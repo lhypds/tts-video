@@ -1,165 +1,48 @@
-
 TTS Video
 =========
 
-a simple tool to generate video from texThe script will:
-- Split your text into sentences
-- Generate separate audio files for each sentence
-- Name files simply as 1.mp3, 2.mp3, 3.mp3, etc.
-- Combine all audio files into one
-- Create a video (200x600) with black background and combined audio
-- Create an SRT subtitle file with proper timing
 
-Generated files (all in `output/` folder):
-- `1.mp3`, `2.mp3`, `3.mp3`, etc. - Individual audio files for each sentence
-- `audio.mp3` - All audio files combined
-- `video.mp4` - Final video (200x600 with black background)
-- `subtitles.srt` - Subtitle file with timing information
+A simple tool to generate videos from text using OpenAI's TTS API.
 
-## Features
+
+Features
+--------
 
 - Convert text to speech using OpenAI's TTS API
-- **Automatic sentence splitting and SRT generation**
-- **Simple numbered audio files** (1.mp3, 2.mp3, 3.mp3, etc.)
-- **Automatic video generation** (200x600, black background with combined audio)
-- Multiple voice options (alloy, echo, fable, onyx, nova, shimmer)
-- Support for both standard (tts-1) and HD quality (tts-1-hd) models
-- Automatic MP3 file generation with timestamps
-- Generates subtitle files (SRT format) with accurate timing
+- Automatic sentence splitting
+- Generate numbered audio files (1.mp3, 2.mp3, 3.mp3, etc.)
+- Combine audio files into one
+- Create video with background image and combined audio
+- Generate SRT subtitle files with accurate timing
+- Multiple voice options: alloy, echo, fable, onyx, nova, shimmer
+- Support for standard (tts-1) and HD quality (tts-1-hd) models
 
-## Prerequisites
 
-- Python 3.7 or higher
-- OpenAI API key
+Quick Start
+-----------
 
-## Setup
-
-1. **Clone the repository** (if you haven't already):
-   ```bash
-   git clone <repository-url>
-   cd tts-video
-   ```
-
-2. **Run the setup script**:
+1. Run setup:
    ```bash
    ./setup.sh
    ```
-   
-   This will:
-   - Create a virtual environment
-   - Install all required dependencies
-   - Create necessary directories
-   - Generate a `.env` file
 
-3. **Configure your API key**:
-   
-   Edit the `.env` file and add your OpenAI API key:
+2. Add your OpenAI API key to `.env`:
    ```
    OPENAI_API_KEY=your-api-key-here
    ```
 
-4. **Prepare your text**:
-   
-   Edit `input.txt` with the text you want to convert to speech. You can include multiple sentences:
-   ```
-   你好，这是一个语音测试。这是第二句话。这是第三句话！
-   ```
+3. Edit `input.txt` with your text
 
-## Usage
-
-Run the application:
-```bash
-./run.sh
-```
-
-The script will:
-- Split your text into sentences
-- Generate separate audio files for each sentence
-- Name files simply as 1.mp3, 2.mp3, 3.mp3, etc.
-- Combine all audio files into one
-- Create a video (200x600) with black background and combined audio
-- Create an SRT subtitle file (`subtitles.srt`) with proper timing
-
-Generated files:
-- `output/1.mp3`, `output/2.mp3`, `output/3.mp3`, etc. - Individual audio files for each sentence
-- `output/audio.mp3` - All audio files combined
-- `output/video.mp4` - Final video (200x600 with black background)
-- `output/subtitles.srt` - Subtitle file with timing information
-
-## Manual Usage
-
-If you prefer to run without the scripts:
-
-1. **Activate the virtual environment**:
+4. Run:
    ```bash
-   source venv/bin/activate
+   ./run.sh
    ```
 
-2. **Run the main script**:
-   ```bash
-   python main.py
-   ```
+5. Output
 
-## Project Structure
+   All files are saved in the `output/` folder:
+   - `1.mp3`, `2.mp3`, `3.mp3`, etc. - Individual sentence audio files
+   - `audio.mp3` - Combined audio
+   - `video.mp4` - Final video (200x600)
+   - `subtitles.srt` - Subtitle file with timing
 
-```
-tts-video/
-├── utils/
-│   ├── openai_utils.py    # OpenAI TTS utility functions
-│   ├── audio_utils.py     # Audio duration and processing utilities
-│   ├── text_utils.py      # Text splitting and SRT generation
-│   └── video_utils.py     # Video creation and audio combining
-├── output/                 # Generated files (audio, video, subtitles)
-├── main.py                 # Main application script
-├── input.txt              # Input text file
-├── clean.sh               # Cleanup script
-├── setup.sh               # Setup script
-├── run.sh                 # Run script
-├── requirements.txt       # Python dependencies
-├── .env                   # Environment variables (create from .env.example)
-└── README.md             # This file
-```
-
-## Customization
-
-You can customize the voice and model in your code:
-
-```python
-from utils.openai_utils import text_to_speech
-
-# Use a different voice
-text_to_speech("Your text here", voice="nova")
-
-# Use HD quality
-text_to_speech("Your text here", model="tts-1-hd")
-```
-
-## Customization
-
-### Audio Files
-Files are simply numbered:
-- `1.mp3` - First sentence
-- `2.mp3` - Second sentence
-- `3.mp3` - Third sentence
-
-### SRT File
-Standard SRT format with millisecond precision:
-```
-1
-00:00:00,000 --> 00:00:02,351
-你好，这是一个语音测试
-
-2
-00:00:02,351 --> 00:00:03,527
-这是第二句话
-```
-
-# Both options
-text_to_speech("Your text here", voice="shimmer", model="tts-1-hd")
-```
-
-Available voices: `alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`
-
-## License
-
-[Add your license here]
