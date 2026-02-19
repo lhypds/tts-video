@@ -5,7 +5,6 @@ from utils.text_utils import split_into_sentences, generate_srt_content
 from utils.video_utils import combine_audio_files, create_video_with_audio
 from dotenv import load_dotenv
 from datetime import timedelta
-import re
 
 
 def format_time(seconds: float) -> str:
