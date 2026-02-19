@@ -106,11 +106,12 @@ def main():
         print(f"✓ Created {audio_path}")
         
         # Create video
-        print("\nCreating video (200x600)...")
+        print("\nCreating video (200x600) with subtitles...")
         video_path = "output/video.mp4"
         create_video_with_audio(
             audio_path,
             video_path,
+            srt_path=str(srt_file),
             width=200,
             height=600,
             bg_color=(0, 0, 0)  # Black background
