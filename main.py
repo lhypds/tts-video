@@ -5,6 +5,7 @@ from utils.text_utils import split_into_sentences, generate_srt_content
 from utils.video_utils import combine_audio_files, create_video_with_audio
 from dotenv import load_dotenv
 from datetime import timedelta
+import os
 
 
 def format_time(seconds: float) -> str:
@@ -104,16 +105,30 @@ def main():
         combine_audio_files(audio_files, audio_path)
         print(f"✓ Created {audio_path}")
         
+        # Check for background image
+        bg_image = None
+        for bg_filename in ['bg.webp', 'bg.png', 'bg.jpg']:
+            bg_path = Path(bg_filename)
+            if bg_path.exists():
+                bg_image = str(bg_path)
+                print(f"\nFound background image: {bg_filename}")
+                break
+        
+        # Get video dimensions from environment variables
+        video_width = int(os.getenv('VIDEO_WIDTH', '200'))
+        video_height = int(os.getenv('VIDEO_HEIGHT', '600'))
+        
         # Create video
-        print("\nCreating video (200x600) with subtitles...")
+        print(f"\nCreating video ({video_width}x{video_height}) with subtitles...")
         video_path = "output/video.mp4"
         create_video_with_audio(
             audio_path,
             video_path,
             srt_path=str(srt_file),
-            width=200,
-            height=600,
-            bg_color=(0, 0, 0)  # Black background
+            width=video_width,
+            height=video_height,
+            bg_color=(0, 0, 0),  # Black background (fallback)
+            bg_image=bg_image  # Use background image if found
         )
         print(f"✓ Created {video_path}")
         

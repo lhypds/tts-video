@@ -1,7 +1,6 @@
-from moviepy import AudioFileClip, ColorClip, concatenate_audioclips, TextClip, CompositeVideoClip
+from moviepy import AudioFileClip, ColorClip, concatenate_audioclips, TextClip, CompositeVideoClip, ImageClip
 from pathlib import Path
 from typing import List, Optional
-import re
 
 
 def combine_audio_files(audio_files: List[str], output_path: str) -> str:
@@ -73,9 +72,9 @@ def parse_srt(srt_path: str) -> List[dict]:
 
 def create_video_with_audio(audio_path: str, output_path: str, srt_path: Optional[str] = None,
                            width: int = 200, height: int = 600, 
-                           bg_color: tuple = (0, 0, 0)) -> str:
+                           bg_color: tuple = (0, 0, 0), bg_image: Optional[str] = None) -> str:
     """
-    Create a video with a solid color background and audio, optionally with subtitles.
+    Create a video with a solid color background or image background and audio, optionally with subtitles.
     
     Args:
         audio_path (str): Path to the audio file
@@ -84,6 +83,7 @@ def create_video_with_audio(audio_path: str, output_path: str, srt_path: Optiona
         width (int): Video width in pixels
         height (int): Video height in pixels
         bg_color (tuple): RGB color tuple for background (default: black)
+        bg_image (Optional[str]): Path to background image file (if provided, overrides bg_color)
     
     Returns:
         str: Path to the generated video file
@@ -91,8 +91,40 @@ def create_video_with_audio(audio_path: str, output_path: str, srt_path: Optiona
     # Load audio
     audio = AudioFileClip(audio_path)
     
-    # Create a color clip (solid color video) with the same duration as audio
-    video = ColorClip(size=(width, height), color=bg_color, duration=audio.duration)
+    # Create background - either from image or solid color
+    if bg_image and Path(bg_image).exists():
+        # Load background image
+        img_clip = ImageClip(bg_image)
+        
+        # Calculate aspect ratios
+        img_width, img_height = img_clip.size
+        target_ratio = width / height
+        img_ratio = img_width / img_height
+        
+        # Resize to cover the entire frame without stretching
+        if img_ratio > target_ratio:
+            # Image is wider - fit to height and crop width
+            new_height = height
+            new_width = int(img_height * target_ratio)
+            img_clip = img_clip.resized(height=new_height)
+            # Center crop
+            x_center = img_clip.w / 2
+            x1 = int(x_center - width / 2)
+            img_clip = img_clip.cropped(x1=x1, width=width)
+        else:
+            # Image is taller - fit to width and crop height
+            new_width = width
+            new_height = int(img_width / target_ratio)
+            img_clip = img_clip.resized(width=new_width)
+            # Center crop
+            y_center = img_clip.h / 2
+            y1 = int(y_center - height / 2)
+            img_clip = img_clip.cropped(y1=y1, height=height)
+        
+        video = img_clip.with_duration(audio.duration)
+    else:
+        # Create a color clip (solid color video) with the same duration as audio
+        video = ColorClip(size=(width, height), color=bg_color, duration=audio.duration)
     
     # Add subtitles if SRT file is provided
     if srt_path and Path(srt_path).exists():
