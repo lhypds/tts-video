@@ -2,3 +2,4 @@ openai>=1.0.0
 python-dotenv
 mutagen
 moviepy>=2.0.0
+websockets

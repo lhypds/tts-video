@@ -1,5 +1,4 @@
 from pathlib import Path
-from utils.openai_utils import text_to_speech
 from utils.audio_utils import get_audio_duration
 from utils.text_utils import split_into_sentences, generate_srt_content
 from utils.video_utils import combine_audio_files, create_video_with_audio
@@ -24,6 +23,18 @@ def main():
     """
     # Load environment variables
     load_dotenv()
+    
+    # Determine which TTS engine to use
+    tts_engine = os.getenv("TTS_ENGINE", "openai").lower()
+    
+    if tts_engine == "minimax":
+        from utils import minimax_utils as tts_module
+        voice = os.getenv("MINIMAX_TTS_VOICE", "male-qn-qingse")
+        print(f"Using Minimax TTS engine (voice: {voice})")
+    else:
+        from utils import openai_utils as tts_module
+        voice = os.getenv("OPENAI_TTS_VOICE", "alloy")
+        print(f"Using OpenAI TTS engine (voice: {voice})")
     
     # Define input file path
     input_file = Path("input.txt")
@@ -69,8 +80,8 @@ def main():
             print(f"\nProcessing sentence {i}/{len(sentences)}...")
             print(f"Text: {sentence}")
             
-            # Generate audio
-            output_path = text_to_speech(sentence)
+            # Generate audio using the selected TTS engine with configured voice
+            output_path = tts_module.text_to_speech(sentence, voice=voice)
             
             # Get audio duration
             duration = get_audio_duration(output_path)
