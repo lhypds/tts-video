@@ -2,6 +2,7 @@ from pathlib import Path
 from utils.openai_utils import text_to_speech
 from utils.audio_utils import get_audio_duration
 from utils.text_utils import split_into_sentences, generate_srt_content
+from utils.video_utils import combine_audio_files, create_video_with_audio
 from dotenv import load_dotenv
 from datetime import timedelta
 import re
@@ -26,7 +27,7 @@ def main():
     
     # Define input file path
     input_file = Path("input.txt")
-    srt_file = Path("input.srt")
+    srt_file = Path("output/subtitles.srt")
     
     # Create input.txt if it doesn't exist
     if not input_file.exists():
@@ -96,12 +97,34 @@ def main():
         srt_file.write_text(srt_content, encoding='utf-8')
         
         print(f"✓ Created {srt_file}")
+        
+        # Combine audio files
+        print("\n" + "=" * 50)
+        print("Combining audio files...")
+        audio_path = "output/audio.mp3"
+        combine_audio_files(audio_files, audio_path)
+        print(f"✓ Created {audio_path}")
+        
+        # Create video
+        print("\nCreating video (200x600)...")
+        video_path = "output/video.mp4"
+        create_video_with_audio(
+            audio_path,
+            video_path,
+            width=200,
+            height=600,
+            bg_color=(0, 0, 0)  # Black background
+        )
+        print(f"✓ Created {video_path}")
+        
         print("=" * 50)
         print(f"\nSummary:")
         print(f"  Total sentences: {len(sentences)}")
         print(f"  Total audio files: {len(audio_files)}")
         print(f"  Total duration: {format_time(cumulative_time)}")
         print(f"  SRT file: {srt_file}")
+        print(f"  Combined audio: {audio_path}")
+        print(f"  Video file: {video_path}")
         
     except Exception as e:
         print(f"Error generating audio: {e}")

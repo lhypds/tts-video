@@ -2,13 +2,26 @@
 TTS Video
 =========
 
-a simple tool to generate video from text, using TTS.
+a simple tool to generate video from texThe script will:
+- Split your text into sentences
+- Generate separate audio files for each sentence
+- Name files simply as 1.mp3, 2.mp3, 3.mp3, etc.
+- Combine all audio files into one
+- Create a video (200x600) with black background and combined audio
+- Create an SRT subtitle file with proper timing
+
+Generated files (all in `output/` folder):
+- `1.mp3`, `2.mp3`, `3.mp3`, etc. - Individual audio files for each sentence
+- `audio.mp3` - All audio files combined
+- `video.mp4` - Final video (200x600 with black background)
+- `subtitles.srt` - Subtitle file with timing information
 
 ## Features
 
 - Convert text to speech using OpenAI's TTS API
 - **Automatic sentence splitting and SRT generation**
 - **Simple numbered audio files** (1.mp3, 2.mp3, 3.mp3, etc.)
+- **Automatic video generation** (200x600, black background with combined audio)
 - Multiple voice options (alloy, echo, fable, onyx, nova, shimmer)
 - Support for both standard (tts-1) and HD quality (tts-1-hd) models
 - Automatic MP3 file generation with timestamps
@@ -63,11 +76,15 @@ The script will:
 - Split your text into sentences
 - Generate separate audio files for each sentence
 - Name files simply as 1.mp3, 2.mp3, 3.mp3, etc.
-- Create an SRT subtitle file (`input.srt`) with proper timing
+- Combine all audio files into one
+- Create a video (200x600) with black background and combined audio
+- Create an SRT subtitle file (`subtitles.srt`) with proper timing
 
 Generated files:
-- `output/1.mp3`, `output/2.mp3`, `output/3.mp3`, etc. - Audio files for each sentence
-- `input.srt` - Subtitle file with timing information
+- `output/1.mp3`, `output/2.mp3`, `output/3.mp3`, etc. - Individual audio files for each sentence
+- `output/audio.mp3` - All audio files combined
+- `output/video.mp4` - Final video (200x600 with black background)
+- `output/subtitles.srt` - Subtitle file with timing information
 
 ## Manual Usage
 
@@ -90,11 +107,12 @@ tts-video/
 ├── utils/
 │   ├── openai_utils.py    # OpenAI TTS utility functions
 │   ├── audio_utils.py     # Audio duration and processing utilities
-│   └── text_utils.py      # Text splitting and SRT generation
-├── output/                 # Generated audio files (1.mp3, 2.mp3, etc.)
+│   ├── text_utils.py      # Text splitting and SRT generation
+│   └── video_utils.py     # Video creation and audio combining
+├── output/                 # Generated files (audio, video, subtitles)
 ├── main.py                 # Main application script
 ├── input.txt              # Input text file
-├── input.srt              # Generated subtitle file (SRT format)
+├── clean.sh               # Cleanup script
 ├── setup.sh               # Setup script
 ├── run.sh                 # Run script
 ├── requirements.txt       # Python dependencies

@@ -15,13 +15,27 @@ else
     echo "No MP3 files found in output/"
 fi
 
-# Remove input.srt if it exists
-if [ -f input.srt ]; then
-    echo "Removing input.srt..."
-    rm -f input.srt
-    echo "✓ Removed input.srt"
+# Remove subtitles.srt if it exists
+if [ -f output/subtitles.srt ]; then
+    echo "Removing subtitles.srt..."
+    rm -f output/subtitles.srt
+    echo "✓ Removed subtitles.srt"
 else
-    echo "No input.srt file found"
+    echo "No subtitles.srt file found"
+fi
+
+# Remove combined audio if it exists
+if [ -f output/audio.mp3 ]; then
+    echo "Removing audio.mp3..."
+    rm -f output/audio.mp3
+    echo "✓ Removed audio.mp3"
+fi
+
+# Remove video file if it exists
+if [ -f output/video.mp4 ]; then
+    echo "Removing video.mp4..."
+    rm -f output/video.mp4
+    echo "✓ Removed video.mp4"
 fi
 
 echo "=============================="
