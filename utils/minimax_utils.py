@@ -13,22 +13,7 @@ def text_to_speech(text: str, output_filename: str = None, voice: str = "male-qn
     
     Args:
         text (str): The text to convert to speech
-        voice (str): The voice ID to use. Common options:
-                       - male-qn-qingse (青涩青年音色)
-                       - male-qn-jingying (精英青年音色)
-                       - male-qn-badao (霸道青年音色)
-                       - male-qn-daxuesheng (青年大学生音色)
-                       - female-shaonv (少女音色)
-                       - female-yujie (御姐音色)
-                       - female-chengshu (成熟女性音色)
-                       - female-tianmei (甜美女性音色)
-                       - presenter_male (男性主持人)
-                       - presenter_female (女性主持人)
-                       - audiobook_male_1 (男性有声书1)
-                       - audiobook_male_2 (男性有声书2)
-                       - audiobook_female_1 (女性有声书1)
-                       - audiobook_female_2 (女性有声书2)
-                       - English_expressive_narrator (English narrator)
+        voice (str): The voice ID to use.
         model (str): The TTS model to use. Options: speech-2.8-hd, speech-2.6-hd, 
                      speech-2.8-turbo, speech-2.6-turbo, speech-02-hd, speech-02-turbo
         output_filename (str): Custom filename for the output (optional). 
