@@ -2,7 +2,7 @@ TTS Video
 =========
 
 
-A simple tool to generate videos from text using OpenAI's TTS API.
+A simple tool to generate videos from text using TTS API.
 
 
 Features
@@ -43,6 +43,6 @@ Quick Start
    All files are saved in the `output/` folder:
    - `1.mp3`, `2.mp3`, `3.mp3`, etc. - Individual sentence audio files
    - `audio.mp3` - Combined audio
-   - `video.mp4` - Final video (200x600)
+   - `video.mp4` - Final video
    - `subtitles.srt` - Subtitle file with timing
 
