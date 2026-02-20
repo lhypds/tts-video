@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Clean previous output first
+./clean.sh
+
 echo "Running TTS Video..."
 echo "===================="
 
