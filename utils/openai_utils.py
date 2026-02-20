@@ -45,8 +45,6 @@ def text_to_speech(text: str, output_filename: str = None, voice: str = "alloy",
     
     # Save to file
     response.stream_to_file(str(output_path))
-    
-    print(f"Audio saved to: {output_path}")
     return str(output_path)
 
 

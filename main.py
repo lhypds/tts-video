@@ -81,23 +81,18 @@ def main():
             print(f"Text: {sentence}")
             
             # Generate audio using the selected TTS engine with configured voice
-            output_path = tts_module.text_to_speech(sentence, voice=voice)
+            # Pass the desired filename directly to avoid intermediate file creation
+            output_filename = f"{i}.mp3"
+            output_path = tts_module.text_to_speech(sentence, output_filename=output_filename, voice=voice)
             
             # Get audio duration
             duration = get_audio_duration(output_path)
             durations.append(duration)
             
-            # Rename file with simple number
-            output_folder = Path("output")
-            new_filename = f"{i}.mp3"
-            new_path = output_folder / new_filename
+            audio_files.append(Path(output_path))
             
-            # Rename the file
-            Path(output_path).rename(new_path)
-            audio_files.append(new_path)
-            
-            print(f"✓ Generated: {new_path}")
-            print(f"  Duration: {format_time(duration)}")
+            print(f"Generated audio: {output_path}")
+            print(f"Duration: {format_time(duration)}")
             
             cumulative_time += duration
         

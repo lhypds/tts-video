@@ -62,7 +62,6 @@ def text_to_speech(text: str, output_filename: str = None, voice: str = "male-qn
     # Run the async WebSocket communication
     try:
         asyncio.run(_text_to_speech_async(api_key, text, output_path, voice, model))
-        print(f"Audio saved to: {output_path}")
         return str(output_path)
     except Exception as e:
         print(f"Error generating audio with Minimax: {e}")
