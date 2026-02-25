@@ -113,12 +113,25 @@ def main():
         
         # Check for background image
         bg_image = None
-        for bg_filename in ['bg.webp', 'bg.png', 'bg.jpg']:
-            bg_path = Path(bg_filename)
+        bg_env = os.getenv('BACKGROUND_IMAGE', '').strip()
+        
+        if bg_env:
+            # Use background path from .env if specified
+            bg_path = Path(bg_env)
             if bg_path.exists():
                 bg_image = str(bg_path)
-                print(f"\nFound background image: {bg_filename}")
-                break
+                print(f"\nUsing background image from .env: {bg_env}")
+            else:
+                print(f"\nWarning: Background image specified in .env not found: {bg_env}")
+        
+        # Fallback to searching for common background files if not in .env
+        if not bg_image:
+            for bg_filename in ['bg.webp', 'bg.png', 'bg.jpg']:
+                bg_path = Path(bg_filename)
+                if bg_path.exists():
+                    bg_image = str(bg_path)
+                    print(f"\nFound background image: {bg_filename}")
+                    break
         
         # Get video dimensions from environment variables
         video_width = int(os.getenv('VIDEO_WIDTH', '200'))

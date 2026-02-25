@@ -2,20 +2,17 @@ TTS Video
 =========
 
 
-A simple tool to generate videos from text using TTS API.
+A simple tool to generate videos from text using TTS API.  
+Support MiniMax and OpenAI's TTS API with multiple voice options and quality settings.  
 
 
 Features
 --------
 
-- Convert text to speech using OpenAI's TTS API
+- Convert text to speech.
 - Automatic sentence splitting
-- Generate numbered audio files (1.mp3, 2.mp3, 3.mp3, etc.)
-- Combine audio files into one
-- Create video with background image and combined audio
 - Generate SRT subtitle files with accurate timing
-- Multiple voice options: alloy, echo, fable, onyx, nova, shimmer
-- Support for standard (tts-1) and HD quality (tts-1-hd) models
+- Create video with background image
 
 
 Quick Start
@@ -26,10 +23,7 @@ Quick Start
    ./setup.sh
    ```
 
-2. Add your OpenAI API key to `.env`:
-   ```
-   OPENAI_API_KEY=your-api-key-here
-   ```
+2. Configure `.env`:
 
 3. Edit `input.txt` with your text
 
@@ -46,3 +40,17 @@ Quick Start
    - `video.mp4` - Final video
    - `subtitles.srt` - Subtitle file with timing
 
+
+Voice Clone
+-----------
+
+You can also use MiniMax's voice cloning feature to create a custom voice.
+
+1. Record a sample of your voice (or any voice you want to clone) and save it as `voice_sample.mp3` in the project root.
+
+2. Run the voice cloning script:  
+```bash
+./clone_voice.sh voice_sample.mp3 --voice-id my_custom_voice
+```
+
+3. The cloned voice ID will be saved to `voice_id.txt`.

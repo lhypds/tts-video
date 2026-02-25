@@ -184,10 +184,16 @@ Requirements:
         # Step 2: Clone the voice
         result_voice_id = clone_voice(file_id, voice_id, api_key)
         
+        # Save voice ID to file
+        output_file = "voice_id.txt"
+        with open(output_file, "w") as f:
+            f.write(result_voice_id)
+        
         # Output the voice ID
         print("\n" + "="*60)
         print(f"Voice ID: {result_voice_id}")
         print("="*60)
+        print(f"\nVoice ID saved to: {output_file}")
         print(f"\nYou can now use this voice ID in TTS calls:")
         print(f'  voice="{result_voice_id}"')
         
